@@ -36,7 +36,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text
 .top { display: flex; align-items: center; gap: 24px; padding: 18px clamp(16px, 3vw, 56px); background: var(--panel); border-bottom: 1px solid var(--line); flex: 0 0 auto; }
 .top img { height: 36px; display: block; }
 .top .product { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: .02em; padding-left: 24px; border-left: 1px solid var(--line); line-height: 1; display: flex; align-items: center; gap: 16px; }
-.top .count { margin-left: auto; font-family: var(--font-display); font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+.top .guide { margin-left: auto; font-family: var(--font-display); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; white-space: nowrap; }
+.top .guide:hover { color: var(--accent); border-color: var(--accent); }
 
 /* stage */
 .stage { flex: 1 1 auto; padding: clamp(24px, 4vh, 48px) clamp(16px, 3vw, 56px) clamp(20px, 3vh, 36px); display: grid; grid-template-columns: minmax(280px, 400px) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); align-content: center; }
@@ -81,7 +82,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text
 <header class="top">
   <img src="assets/logos/crusoe-lockup-white.svg" alt="Crusoe">
   <div class="product">Developer Demos <span class="chip">Booth</span></div>
-  <div class="count" id="count"></div>
+  <a class="guide" href="guide.html" title="What each demo shows, what to say, which buttons to press">Booth Guide</a>
 </header>
 
 <main class="stage">
@@ -99,7 +100,6 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text
 </main>
 
 <footer class="foot">
-  <a href="guide.html">Booth Guide</a>
   <a href="https://github.com/crusoecloud/crusoe-developer-hub" target="_blank" rel="noopener">github.com/crusoecloud/crusoe-developer-hub</a>
   <a href="https://console.crusoecloud.com" target="_blank" rel="noopener">console.crusoecloud.com</a>
   <a href="https://discord.gg/tRKs5bMyry" target="_blank" rel="noopener">discord.gg/tRKs5bMyry</a>
@@ -124,7 +124,6 @@ document.getElementById('cards').innerHTML = DEMOS.map((d, i) => `
       <div class="open"><span>Open Demo</span><span class="arrow">&rarr;</span></div>
     </div>
   </a>`).join('');
-document.getElementById('count').textContent = `${DEMOS.length} demo${DEMOS.length === 1 ? '' : 's'}`;
 document.getElementById('key-last').textContent = String(Math.min(9, DEMOS.length));
 
 const open = d => { if (d) location.href = hrefOf(d); };

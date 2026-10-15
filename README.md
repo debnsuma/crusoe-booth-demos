@@ -4,6 +4,7 @@ One page that opens every booth demo. Static files only, so it runs from GitHub 
 
 ```
 index.html             the launcher: one card per demo, keys 1-9 open them
+guide.html             the booth guide for staff (BOOTH_GUIDE.md is the same text)
 demos.js               the registry: add a demo here
 assets/                shared brand fonts and logos
 managed-rl-wordle/     Crusoe Managed RL, Wordle (the default demo)
@@ -12,6 +13,10 @@ slurm-topology/        Managed Slurm, topology-aware scheduling
 serve.sh               local server for testing
 run.sh                 booth mode: serve, then Chrome full screen (macOS)
 ```
+
+## Staffing the booth
+
+Read [BOOTH_GUIDE.md](BOOTH_GUIDE.md): what each demo shows, what to say, which buttons to press. The same guide is on the launcher at [guide.html](https://debnsuma.github.io/crusoe-booth-demos/guide.html).
 
 ## Run it locally
 

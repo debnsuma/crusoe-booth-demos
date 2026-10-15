@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Booth Guide</title>
+<link rel="icon" href="assets/logos/crusoe-burst-white.png">
+<style>
+@font-face { font-family: "Diatype Mono"; src: url("assets/fonts/ABCDiatypeMono-Regular.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Diatype Mono"; src: url("assets/fonts/ABCDiatypeMono-Bold.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Suisse Intl"; src: url("assets/fonts/SuisseIntl-Regular.otf") format("opentype"); font-weight: 400; }
+@font-face { font-family: "Suisse Intl"; src: url("assets/fonts/SuisseIntl-Medium.otf") format("opentype"); font-weight: 500; }
+@font-face { font-family: "Suisse Intl"; src: url("assets/fonts/SuisseIntl-Bold.otf") format("opentype"); font-weight: 700; }
+:root { color-scheme: dark; --bg: #0F1011; --panel: #1B1D1E; --line: #34373A; --ink: #FFFFFF; --muted: #BDBDBD; --dim: #8A8A8A; --accent: #CEEB13; --accent-ink: #3E4A00; --slate: #7799B6; --gold: #CD881A; --w-y: #B59F3B; --red: #FF5F56;
+  --font-display: "Diatype Mono", "Roboto Mono", monospace; --font-body: "Suisse Intl", "Inter Tight", system-ui, sans-serif; }
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 18px; line-height: 1.5; }
+a { color: var(--accent); text-decoration: none; } a:hover { text-decoration: underline; }
+.top { display: flex; align-items: center; gap: 24px; padding: 18px clamp(16px, 3vw, 56px); background: var(--panel); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 2; }
+.top img { height: 36px; display: block; }
+.top .product { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: .02em; padding-left: 24px; border-left: 1px solid var(--line); line-height: 1; display: flex; align-items: center; gap: 16px; }
+.chip { font-family: var(--font-display); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-ink); background: var(--accent); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+.top .hub { margin-left: auto; font-family: var(--font-display); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; white-space: nowrap; }
+.top .hub:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+main { max-width: 860px; margin: 0 auto; padding: clamp(28px, 5vh, 56px) 16px 64px; }
+.eyebrow { font-family: var(--font-display); font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: var(--slate); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(32px, 4vw, 44px); line-height: 1.1; margin: 8px 0 12px; }
+h2 { font-size: 26px; margin: 0 0 6px; display: flex; align-items: center; gap: 14px; }
+h2 .num { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 16px; background: var(--tone, var(--accent)); color: var(--tone-ink, #1B2000); flex: none; }
+h3 { font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); margin: 22px 0 6px; }
+p { margin: 0 0 12px; } p.lead { color: var(--muted); font-size: 19px; }
+ul, ol { margin: 0 0 12px; padding-left: 22px; } li { margin: 4px 0; }
+li::marker { color: var(--dim); }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 26px 28px; margin: 22px 0; }
+.card[data-tone="slate"] { --tone: var(--slate); --tone-ink: #0B1216; } .card[data-tone="gold"] { --tone: var(--gold); --tone-ink: #FFFFFF; }
+.card .open { display: inline-block; margin-top: 8px; font-family: var(--font-display); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--tone, var(--accent)); }
+kbd { font-family: var(--font-display); font-size: 14px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 6px; color: var(--muted); }
+code { font-family: var(--font-display); font-size: 16px; color: var(--muted); }
+b { font-weight: 700; }
+.quote { border-left: 3px solid var(--accent); padding-left: 14px; color: var(--muted); font-style: italic; margin: 6px 0; }
+.sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 28px 0; }
+@media (max-width: 600px) { .top { gap: 14px; } .top .product { font-size: 18px; padding-left: 14px; } .top .product .chip { display: none; } .card { padding: 20px 18px; } h2 { align-items: flex-start; } h2 .num { margin-top: 2px; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <img src="assets/logos/crusoe-lockup-white.svg" alt="Crusoe">
+  <div class="product">Booth Guide <span class="chip">Staff</span></div>
+  <a class="hub" href="./">All Demos</a>
+</header>
+<main>
+  <div class="eyebrow">Crusoe Developer Relations Engineering</div>
+  <h1>Three demos, five minutes.</h1>
+  <p class="lead">What each screen shows, what to say, and which buttons to press. Keep this open on your phone.</p>
+
+  <h3>The launcher</h3>
+  <ul>
+    <li>Keys <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> open a demo. <kbd>Enter</kbd> opens the first. Every demo has an <b>All Demos</b> button at the top right to come back.</li>
+    <li>Full screen the browser before visitors arrive: F11, or Ctrl+Cmd+F on a Mac.</li>
+    <li>Nothing needs the network once a page has loaded. If the venue Wi-Fi dies mid-demo, keep going.</li>
+    <li>No network at all? Clone the repo and run <code>./run.sh</code>. It serves locally and opens Chrome in kiosk mode.</li>
+  </ul>
+
+  <section class="card" data-tone="accent">
+    <h2><span class="num">1</span>Managed RL: a model learns Wordle</h2>
+    <p>A 27B Qwen model learns to play Wordle with reinforcement learning (GRPO) on Crusoe Managed RL. Managed RL is in private preview.</p>
+    <h3>What's on screen</h3>
+    <p>Three Wordle boards race on the same secret word: <b>Base Model</b>, <b>After SFT</b>, <b>After RL</b>. The RL board wins most of the time. Underneath, the training run replays: the SFT loss curve, then the win rate climbing across 60 GRPO steps. The tiles on the left sum it up: base 2%, after SFT 22%, after RL 58%.</p>
+    <h3>Say this</h3>
+    <p class="quote">The base model guesses almost at random. Supervised fine-tuning teaches it the format. RL is what teaches it to actually win: it plays thousands of games, gets a reward for winning, and GRPO turns that reward into better guesses.</p>
+    <p class="quote">You write the game and the reward in Python. Crusoe runs the GPUs, the rollouts and the training, and hands you back a checkpoint you own.</p>
+    <p class="quote">Wordle is the toy. The same loop trains agents, tool use, coding, anything you can score.</p>
+    <h3>The tabs</h3>
+    <ul>
+      <li><b>1 Watch</b> is the attract loop.</li>
+      <li><b>2 How To Train</b> shows what you write versus what Crusoe runs.</li>
+      <li><b>3 GRPO Under The Hood</b> walks one training step in six stations.</li>
+      <li><b>4 Get Started</b> has the QR codes: the developer hub on GitHub, the console, Discord.</li>
+    </ul>
+    <h3>Controls</h3>
+    <p><kbd>Space</kbd> pauses, <kbd>R</kbd> resets, <kbd>Esc</kbd> goes back to Watch, <kbd>F</kbd> is full screen. Left alone for three minutes it returns to Watch on its own.</p>
+    <h3>If asked</h3>
+    <p>The boards replay real games from the real models. The win-rate curve is illustrative, shaped on the real run's evaluations. The SFT loss curve is the real run.</p>
+    <a class="open" href="managed-rl-wordle/">Open demo &rarr;</a>
+  </section>
+
+  <section class="card" data-tone="slate">
+    <h2><span class="num">2</span>fastokens vs HuggingFace tokenizers</h2>
+    <p>fastokens is a tokenizer that drops in for HuggingFace <code>tokenizers</code> and is several times to about 85 times faster on a single prompt. The gap grows as prompts get longer.</p>
+    <h3>What's on screen</h3>
+    <p>One chart. <span class="sw" style="background:#A3A3A3"></span>Grey line: HuggingFace. <span class="sw" style="background:var(--accent)"></span>Yellow line: fastokens. The shaded band between them is the difference, and it opens up left to right as documents get bigger. The big number on the right is the speedup on the document that just landed. It cycles through five model tokenizers (gpt-oss-120b, DeepSeek-V3.2, MiniMax-M2.1, Mistral-Nemo, NVIDIA Nemotron-3-Nano) on two datasets, twenty documents per pass, about twenty seconds each.</p>
+    <h3>Say this</h3>
+    <p class="quote">Tokenizing is the first thing an inference server does on every request, and it sits in front of the GPU.</p>
+    <p class="quote">HuggingFace tokenizes one piece at a time, so twice the text is twice the wait. fastokens splits a long prompt across cores. Same documents, same machine, one at a time.</p>
+    <p class="quote">Long context is where it bites: a million-token prompt is hundreds of milliseconds before the GPU even starts.</p>
+    <h3>Controls</h3>
+    <p><kbd>Space</kbd>, or the Pause button, holds the current pass so you can talk over it. That is the only control.</p>
+    <h3>If asked</h3>
+    <p>The numbers come from one recorded sweep, measured once and replayed here. Nothing is measured on the booth machine, so it cannot drift.</p>
+    <a class="open" href="fastokens/">Open demo &rarr;</a>
+  </section>
+
+  <section class="card" data-tone="gold">
+    <h2><span class="num">3</span>Managed Slurm: topology-aware scheduling</h2>
+    <p>Crusoe Managed Slurm discovers the network topology automatically and keeps <code>topology.conf</code> up to date. The GPU fleet on screen is simulated; the scheduler is Slurm's real <code>topology/tree</code> plugin, unmodified.</p>
+    <h3>What's on screen</h3>
+    <p>A hall of 10 racks, 8 nodes each, 8 GPUs per node. 512 GPUs are in service; the two dark racks at the end are installed but not yet switched on. Each rack has a leaf switch above it, with two spine switches above those. Job colours are the whole story: <span class="sw" style="background:var(--accent)"></span><b>yellow</b> sits on one leaf switch (fastest), <span class="sw" style="background:#FFC043"></span><b>amber</b> spans leaves under one spine, <span class="sw" style="background:var(--red)"></span><b>red</b> spans both spine planes (slowest). On the right: the <code>topology.conf</code> panel, the queue, and the scheduler log. Bottom left: the same job, 6.9 hours well placed versus 12 hours badly placed.</p>
+    <h3>Say this</h3>
+    <p class="quote">Slurm can only place a job well if it knows the wiring. On most clouds you cannot see the wiring, so topology.conf is a hand-written guess that goes stale.</p>
+    <p class="quote">Crusoe generates it from the real fabric, and regenerates it whenever the fleet changes.</p>
+    <p>Then press <b>+ Add capacity</b>:</p>
+    <p class="quote">Two racks come online. topology.conf regenerates by itself, the queued jobs start on the new racks, and the hand-written config is now blind to 128 GPUs.</p>
+    <h3>Controls</h3>
+    <ul>
+      <li><b>Launch a job</b>: pick a GPU count, press sbatch, watch where it lands.</li>
+      <li><b>Pause</b> and <b>Resume</b>. <b>Restart</b> starts the run over.</li>
+      <li><b>+ Add capacity</b>, once per run. The set-piece.</li>
+      <li><b>Autoplay</b> runs the whole story on a loop every 18 seconds: the mode for an unattended screen.</li>
+      <li>Drag or scroll to move the camera; it drifts back on its own.</li>
+    </ul>
+    <h3>If asked</h3>
+    <p>The placement decisions are real Slurm logic. The hardware, the jobs and the clock are simulated.</p>
+    <a class="open" href="slurm-topology/">Open demo &rarr;</a>
+  </section>
+
+  <hr>
+  <h3>Before the doors open</h3>
+  <ol>
+    <li>Open the launcher, full screen the browser, open each demo once so fonts and data are cached.</li>
+    <li>Leave the screen on Managed RL (Watch tab), or on Slurm with Autoplay on.</li>
+    <li>Keep this guide open on your phone.</li>
+  </ol>
+</main>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crusoe Developer Demos</title>
+<link rel="icon" href="assets/logos/crusoe-burst-white.png">
+<style>
+/* The launcher. One dark stage in the same language as the demos it opens:
+   near-black ground, charcoal panels, white lockup, Hi-Vis Yellow as the one
+   accent, Diatype Mono for display and Suisse Intl for text. */
+@font-face { font-family: "Diatype Mono"; src: url("assets/fonts/ABCDiatypeMono-Regular.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Diatype Mono"; src: url("assets/fonts/ABCDiatypeMono-Bold.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Suisse Intl"; src: url("assets/fonts/SuisseIntl-Regular.otf") format("opentype"); font-weight: 400; }
+@font-face { font-family: "Suisse Intl"; src: url("assets/fonts/SuisseIntl-Medium.otf") format("opentype"); font-weight: 500; }
+@font-face { font-family: "Suisse Intl"; src: url("assets/fonts/SuisseIntl-Bold.otf") format("opentype"); font-weight: 700; }
+
+:root {
+  color-scheme: dark;
+  --bg: #0F1011; --panel: #1B1D1E; --line: #34373A; --ink: #FFFFFF; --muted: #BDBDBD; --dim: #8A8A8A;
+  --accent: #CEEB13; --accent-ink: #3E4A00; --slate: #7799B6; --gold: #CD881A; --green: #738564;
+  --font-display: "Diatype Mono", "Roboto Mono", monospace;
+  --font-body: "Suisse Intl", "Inter Tight", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+html { background: var(--bg); }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 20px; line-height: 1.4; display: flex; flex-direction: column; min-height: 100%; }
+a { color: inherit; text-decoration: none; }
+.eyebrow { font-family: var(--font-display); font-size: 15px; letter-spacing: .12em; text-transform: uppercase; color: var(--slate); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text-wrap: balance; }
+.chip { font-family: var(--font-display); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-ink); background: var(--accent); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+.hl { color: var(--accent); }
+
+/* top bar */
+.top { display: flex; align-items: center; gap: 24px; padding: 18px clamp(16px, 3vw, 56px); background: var(--panel); border-bottom: 1px solid var(--line); flex: 0 0 auto; }
+.top img { height: 36px; display: block; }
+.top .product { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: .02em; padding-left: 24px; border-left: 1px solid var(--line); line-height: 1; display: flex; align-items: center; gap: 16px; }
+.top .count { margin-left: auto; font-family: var(--font-display); font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+
+/* stage */
+.stage { flex: 1 1 auto; padding: clamp(24px, 4vh, 48px) clamp(16px, 3vw, 56px) clamp(20px, 3vh, 36px); display: grid; grid-template-columns: minmax(280px, 400px) minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); align-content: start; }
+.hero { display: grid; align-content: start; gap: 22px; }
+.hero h1 { font-size: clamp(34px, 3.4vw, 50px); line-height: 1.1; }
+.hero p { color: var(--muted); font-size: 18px; margin: 0; max-width: 34ch; }
+.keys { display: grid; gap: 10px; font-family: var(--font-display); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
+.keys kbd { font: inherit; display: inline-block; min-width: 34px; text-align: center; padding: 4px 8px; border: 1px solid var(--line); border-radius: 8px; color: var(--muted); margin-right: 10px; }
+
+/* cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 22px; align-content: start; }
+.card { --tone: var(--accent); --tone-ink: #1B2000; position: relative; display: grid; grid-template-rows: auto auto 1fr auto; gap: 14px; padding: 26px 28px 22px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; min-height: 300px; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; outline: none; }
+.card:hover, .card:focus-visible { transform: translateY(-3px); border-color: var(--tone); box-shadow: 0 0 0 1px var(--tone), 0 18px 48px rgba(0, 0, 0, .45); }
+.card .who { display: flex; align-items: center; gap: 14px; }
+.card .num { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 16px; background: var(--tone); color: var(--tone-ink); flex: none; }
+.card .eyebrow { color: var(--tone); font-size: 14px; }
+.card h2 { font-size: 26px; line-height: 1.18; }
+.card p { margin: 0; color: var(--muted); font-size: 17px; }
+.card .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.card .tag { font-family: var(--font-display); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); padding: 5px 10px; border-radius: 999px; white-space: nowrap; }
+.card .open { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px; padding-top: 16px; border-top: 1px solid var(--line); font-family: var(--font-display); font-size: 15px; letter-spacing: .1em; text-transform: uppercase; color: var(--tone); }
+.card .open .arrow { transition: transform .18s ease; }
+.card:hover .open .arrow { transform: translateX(6px); }
+.card .default { position: absolute; top: -13px; right: 22px; }
+.card.default { border-color: var(--accent); }
+.card[data-tone="slate"] { --tone: var(--slate); --tone-ink: #0B1216; }
+.card[data-tone="gold"]  { --tone: var(--gold);  --tone-ink: #FFFFFF; }
+.card[data-tone="green"] { --tone: var(--green); --tone-ink: #FFFFFF; }
+
+/* foot */
+.foot { padding: 14px clamp(16px, 3vw, 56px) 18px; display: flex; gap: 24px; flex-wrap: wrap; font-family: var(--font-display); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+.foot a:hover { color: var(--accent); }
+
+@media (max-width: 900px) {
+  .stage { grid-template-columns: 1fr; }
+  .top .product .chip { display: none; }
+  .keys { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <img src="assets/logos/crusoe-lockup-white.svg" alt="Crusoe">
+  <div class="product">Developer Demos <span class="chip">Booth</span></div>
+  <div class="count" id="count"></div>
+</header>
+
+<main class="stage">
+  <div class="hero">
+    <div class="eyebrow">Crusoe Developer Relations</div>
+    <h1>Pick A <span class="hl">Demo</span>.</h1>
+    <p>Every screen here runs on its own, no network needed once loaded. Open one, and it takes over the display.</p>
+    <div class="keys" aria-hidden="true">
+      <div><kbd>1</kbd>–<kbd id="key-last">3</kbd> open a demo</div>
+      <div><kbd>↵</kbd> open the default</div>
+      <div><kbd>⌥ ←</kbd> come back here</div>
+    </div>
+  </div>
+  <nav class="cards" id="cards" aria-label="Demos"></nav>
+</main>
+
+<footer class="foot">
+  <a href="https://github.com/crusoecloud/crusoe-developer-hub" target="_blank" rel="noopener">github.com/crusoecloud/crusoe-developer-hub</a>
+  <a href="https://console.crusoecloud.com" target="_blank" rel="noopener">console.crusoecloud.com</a>
+  <a href="https://discord.gg/tRKs5bMyry" target="_blank" rel="noopener">discord.gg/tRKs5bMyry</a>
+</footer>
+
+<script src="demos.js"></script>
+<script>
+const CFG = Object.assign({ idleOpenDefaultSeconds: 0 }, window.HUB_CONFIG || {});
+const all = (window.DEMOS || []).slice();
+// the default leads, whatever the registry order
+const DEMOS = all.filter(d => d.isDefault).concat(all.filter(d => !d.isDefault));
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const hrefOf = d => (d.path || `${d.id}/`);
+
+document.getElementById('cards').innerHTML = DEMOS.map((d, i) => `
+  <a class="card${d.isDefault ? ' default' : ''}" data-tone="${esc(d.tone || 'accent')}" href="${esc(hrefOf(d))}" data-key="${i + 1}">
+    ${d.isDefault ? '<span class="chip default">Default</span>' : ''}
+    <div class="who"><span class="num">${i + 1}</span><span class="eyebrow">${esc(d.product)}</span></div>
+    <h2>${esc(d.title)}</h2>
+    <p>${esc(d.blurb)}</p>
+    <div>
+      <div class="tags">${(d.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+      <div class="open"><span>Open Demo</span><span class="arrow">&rarr;</span></div>
+    </div>
+  </a>`).join('');
+document.getElementById('count').textContent = `${DEMOS.length} demo${DEMOS.length === 1 ? '' : 's'}`;
+document.getElementById('key-last').textContent = String(Math.min(9, DEMOS.length));
+
+const open = d => { if (d) location.href = hrefOf(d); };
+// ?demo=<id> jumps straight to one, for a bookmark or a QR code
+const want = new URLSearchParams(location.search).get('demo');
+if (want) open(DEMOS.find(d => d.id === want));
+
+addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (/^[1-9]$/.test(e.key)) open(DEMOS[Number(e.key) - 1]);
+  else if (e.key === 'Enter' && document.activeElement?.tagName !== 'A') open(DEMOS[0]);
+});
+
+// unattended: after a quiet spell, go to the default demo
+if (CFG.idleOpenDefaultSeconds > 0) {
+  let t;
+  const arm = () => { clearTimeout(t); t = setTimeout(() => open(DEMOS[0]), CFG.idleOpenDefaultSeconds * 1000); };
+  for (const ev of ['pointerdown', 'pointermove', 'keydown', 'touchstart']) addEventListener(ev, arm, { passive: true });
+  arm();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crusoe fastokens, Tokenizer Benchmark</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 fill=%22%230F1011%22/%3E%3Crect x=%224%22 y=%2216%22 width=%226%22 height=%2212%22 fill=%22%23CEEB13%22/%3E%3Crect x=%2213%22 y=%228%22 width=%226%22 height=%2220%22 fill=%22%23CEEB13%22/%3E%3Crect x=%2222%22 y=%224%22 width=%226%22 height=%2224%22 fill=%22%23CEEB13%22/%3E%3C/svg%3E">
+<link rel="preload" href="./fonts/SuisseIntl-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="./fonts/ABCDiatypeMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  /* Crusoe brand type, vendored: Suisse Intl for text, Diatype Mono for
+     figures. The family names "Grotesk" and "Mono" are what the canvas code
+     asks for, so only the files behind them changed. */
+  @font-face { font-family: "Grotesk"; src: url("./fonts/SuisseIntl-Regular.otf") format("opentype"); font-weight: 400; font-display: block; }
+  @font-face { font-family: "Grotesk"; src: url("./fonts/SuisseIntl-Medium.otf") format("opentype"); font-weight: 500; font-display: block; }
+  @font-face { font-family: "Grotesk"; src: url("./fonts/SuisseIntl-Bold.otf") format("opentype"); font-weight: 600 700; font-display: block; }
+  @font-face { font-family: "Mono"; src: url("./fonts/ABCDiatypeMono-Regular.woff2") format("woff2"); font-weight: 400 500; font-display: block; }
+  @font-face { font-family: "Mono"; src: url("./fonts/ABCDiatypeMono-Bold.woff2") format("woff2"); font-weight: 600 700; font-display: block; }
+
+  :root {
+    color-scheme: dark;
+    /* Same ground as the other booth demos: near-black, charcoal panels,
+       white ink, Hi-Vis Yellow as the one accent. */
+    --bg: #0F1011; --panel: #1B1D1E; --hairline: #34373A;
+    --compute: #CEEB13; --accent-ink: #3E4A00;
+    --cache: #4CC9F0; --zone: #FF8A1F;
+    --text: #FFFFFF; --muted: #BDBDBD; --dim: #8A8A8A;
+  }
+
+  html, body {
+    margin: 0; height: 100%; background: var(--bg); overflow: hidden;
+    font-family: "Grotesk", system-ui, sans-serif; color: var(--text);
+    font-feature-settings: "tnum" 1;
+  }
+  /* Size and scale are set by fit() in duel.js: the logical height is fixed
+     and the logical width follows the window's aspect ratio, so the page fills
+     the screen on any display instead of being letterboxed into 16:9. */
+  #stage {
+    position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px;
+    transform-origin: 50% 50%; background: var(--bg);
+  }
+  #stage canvas { position: absolute; inset: 0; }
+  /* The bloom layer is what makes it look expensive: half-res, blurred, screened. */
+  #bloom { filter: blur(24px); mix-blend-mode: screen; opacity: 0.85; pointer-events: none; }
+  body.projector #bloom { display: none; }
+
+  /* Top bar: the same lockup, product name and chip as the other demos. The
+     canvas paints the bar's ground and the per-pass readings; this DOM layer
+     carries the brand, because an <img> scales with the stage for free. */
+  #top {
+    position: absolute; left: 0; top: 0; height: 76px; padding: 0 56px; z-index: 2;
+    display: flex; align-items: center; gap: 24px; pointer-events: none;
+  }
+  #top img { height: 30px; display: block; }
+  #top .product {
+    font-family: "Mono", ui-monospace, monospace; font-size: 22px; font-weight: 700;
+    letter-spacing: .02em; padding-left: 24px; border-left: 1px solid var(--hairline);
+    line-height: 1; display: flex; align-items: center; gap: 16px;
+  }
+  .chip {
+    font-family: "Mono", ui-monospace, monospace; font-size: 13px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--accent-ink); background: var(--compute);
+    padding: 6px 12px; border-radius: 999px; white-space: nowrap;
+  }
+
+  /* The one control. A DOM button rather than something painted into the
+     canvas: it sits inside #stage so it scales with everything else, but it
+     gets real hit-testing, a real focus ring and keyboard activation for
+     free, none of which a drawn rectangle would have. */
+  #pause {
+    position: absolute; right: 84px; bottom: 110px; z-index: 2;
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 18px; border: 2px solid var(--compute); border-radius: 999px;
+    background: transparent; color: var(--compute);
+    font-family: "Mono", ui-monospace, monospace;
+    font-size: 15px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: background .12s, color .12s;
+  }
+  #pause:hover { background: rgba(206, 235, 19, .12); }
+  #pause:focus-visible { outline: 3px solid var(--compute); outline-offset: 2px; }
+  #pause .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--compute); flex: none; }
+  /* Paused reads as held, not as broken: the button fills, the dot goes hollow. */
+  #pause[data-paused="true"] { background: var(--compute); color: #000; }
+  #pause[data-paused="true"] .dot { background: transparent; box-shadow: inset 0 0 0 2px #000; }
+  #pause .hint { font-weight: 400; font-size: 12px; letter-spacing: 0; opacity: .7; }
+
+  /* Back to the launcher. In the bottom margin, clear of the chart. */
+  #hub {
+    position: absolute; left: 64px; bottom: 22px; z-index: 2;
+    font-family: "Mono", ui-monospace, monospace; font-size: 13px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--dim); text-decoration: none;
+  }
+  #hub:hover { color: var(--compute); }
+  #hub[hidden] { display: none; }
+</style>
+</head>
+<body>
+  <div id="stage">
+    <canvas id="main" width="1920" height="1080"></canvas>
+    <canvas id="bloom" width="960" height="540"></canvas>
+    <header id="top">
+      <img src="./img/crusoe-lockup-white.svg" alt="Crusoe">
+      <div class="product">fastokens <span class="chip">Tokenizer Benchmark</span></div>
+    </header>
+    <button id="pause" type="button" data-paused="false" aria-pressed="false">
+      <span class="dot"></span><span class="text">PAUSE</span>
+      <span class="hint">space</span>
+    </button>
+    <a id="hub" href="../" hidden>&larr; All Demos</a>
+  </div>
+  <script type="module" src="./duel.js"></script>
+</body>
+</html>

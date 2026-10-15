@@ -1,0 +1,78 @@
+diff --git a/src/styles.css b/src/styles.css
+index b14638b..b514d44 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -123,6 +123,43 @@ body {
+ 
+ .brand { display: flex; align-items: center; gap: 14px; }
+ .logo { height: 30px; }
++.product {
++  display: flex;
++  align-items: center;
++  gap: 12px;
++  padding-left: 14px;
++  border-left: 1px solid var(--border);
++  font-family: var(--mono);
++  font-size: var(--fs-brand);
++  font-weight: 700;
++  letter-spacing: 0.02em;
++  line-height: 1;
++}
++.chip {
++  font-family: var(--mono);
++  font-size: var(--fs-xs);
++  font-weight: 700;
++  letter-spacing: 0.1em;
++  text-transform: uppercase;
++  color: var(--accent-ink);
++  background: var(--accent);
++  padding: 4px 9px;
++  border-radius: 999px;
++  white-space: nowrap;
++}
++.controls a.hub {
++  color: var(--dim);
++  border: 1px solid var(--border);
++  border-radius: 8px;
++  padding: 8px 14px;
++  font-family: var(--mono);
++  font-size: var(--fs-xs);
++  letter-spacing: 0.1em;
++  text-transform: uppercase;
++  text-decoration: none;
++  transition: border-color 0.15s, color 0.15s;
++}
++.controls a.hub:hover { border-color: var(--border-strong); color: var(--accent); }
+ .wordmark {
+   font-size: var(--fs-brand);
+   font-weight: 700;
+diff --git a/src/ui/Chrome.tsx b/src/ui/Chrome.tsx
+index a03d8bf..cdd8293 100644
+--- a/src/ui/Chrome.tsx
++++ b/src/ui/Chrome.tsx
+@@ -24,6 +24,12 @@ export function Header() {
+         ) : (
+           <span className="wordmark">{theme.brand.name}</span>
+         )}
++        {/* Product name and chip, in the same arrangement as the other booth
++            demos, so a visitor walking between screens sees one family. */}
++        <div className="product">
++          {theme.brand.name} {theme.brand.product}
++          <span className="chip">{theme.brand.tagline}</span>
++        </div>
+       </div>
+ 
+       <div className="controls">
+@@ -62,6 +68,12 @@ export function Header() {
+         >
+           {autoplay ? 'Stop autoplay' : 'Autoplay'}
+         </button>
++
++        {/* Back to the demo launcher. Only when served over http: opened as a
++            file, "../" would be a directory listing. */}
++        {location.protocol !== 'file:' && (
++          <a className="hub" href="../" title="Back to the demo launcher">All demos</a>
++        )}
+       </div>
+     </header>
+   );

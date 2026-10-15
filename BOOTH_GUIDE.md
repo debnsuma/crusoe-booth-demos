@@ -4,7 +4,7 @@ For anyone staffing the Crusoe booth. Five minutes to read. The same guide is on
 
 ## The launcher
 
-- Live: **https://debnsuma.github.io/crusoe-booth-demos/**
+- Live at **[debnsuma.github.io/crusoe-booth-demos](https://debnsuma.github.io/crusoe-booth-demos/)**
 - Keys **1**, **2**, **3** open a demo. **Enter** opens the first one. Every demo has an **All Demos** button at the top right to come back.
 - Full screen the browser before visitors arrive (F11, or Ctrl+Cmd+F on a Mac).
 - Nothing needs the network once a page has loaded. If the venue Wi-Fi dies mid-demo, keep going.

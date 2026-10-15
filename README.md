@@ -4,7 +4,8 @@ One page that opens every booth demo. Static files only, so it runs from GitHub 
 
 ```
 index.html             the launcher: one card per demo, keys 1-9 open them
-guide.html             the booth guide for staff (BOOTH_GUIDE.md is the same text)
+BOOTH_GUIDE.md         the booth guide for staff; guide.html is generated from it
+tools/build_guide.py   python3 tools/build_guide.py after editing BOOTH_GUIDE.md
 demos.js               the registry: add a demo here
 assets/                shared brand fonts and logos
 managed-rl-wordle/     Crusoe Managed RL, Wordle (the default demo)
@@ -16,7 +17,7 @@ run.sh                 booth mode: serve, then Chrome full screen (macOS)
 
 ## Staffing the booth
 
-Read [BOOTH_GUIDE.md](BOOTH_GUIDE.md): what each demo shows, what to say, which buttons to press. The same guide is on the launcher at [guide.html](https://debnsuma.github.io/crusoe-booth-demos/guide.html).
+Read [BOOTH_GUIDE.md](BOOTH_GUIDE.md): what each demo shows, what to say, which buttons to press. The same guide is on the launcher at [guide.html](https://debnsuma.github.io/crusoe-booth-demos/guide.html). Edit the Markdown, then run `python3 tools/build_guide.py` to regenerate the page.
 
 ## Run it locally
 

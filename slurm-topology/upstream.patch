@@ -1,8 +1,8 @@
 diff --git a/src/styles.css b/src/styles.css
-index b14638b..b514d44 100644
+index b14638b..1014e59 100644
 --- a/src/styles.css
 +++ b/src/styles.css
-@@ -123,6 +123,43 @@ body {
+@@ -123,6 +123,45 @@ body {
  
  .brand { display: flex; align-items: center; gap: 14px; }
  .logo { height: 30px; }
@@ -33,16 +33,18 @@ index b14638b..b514d44 100644
 +.controls a.hub {
 +  color: var(--dim);
 +  border: 1px solid var(--border);
-+  border-radius: 8px;
++  border-radius: 999px;
 +  padding: 8px 14px;
 +  font-family: var(--mono);
 +  font-size: var(--fs-xs);
 +  letter-spacing: 0.1em;
 +  text-transform: uppercase;
 +  text-decoration: none;
++  line-height: 1;
++  white-space: nowrap;
 +  transition: border-color 0.15s, color 0.15s;
 +}
-+.controls a.hub:hover { border-color: var(--border-strong); color: var(--accent); }
++.controls a.hub:hover { border-color: var(--accent); color: var(--accent); }
  .wordmark {
    font-size: var(--fs-brand);
    font-weight: 700;

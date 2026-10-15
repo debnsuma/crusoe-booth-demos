@@ -84,13 +84,15 @@
   #pause[data-paused="true"] .dot { background: transparent; box-shadow: inset 0 0 0 2px #000; }
   #pause .hint { font-weight: 400; font-size: 12px; letter-spacing: 0; opacity: .7; }
 
-  /* Back to the launcher. In the bottom margin, clear of the chart. */
+  /* Back to the launcher: the same small pill as the other demos, in the top
+     bar. The canvas keeps its right-hand reading clear of it. */
   #hub {
-    position: absolute; left: 64px; bottom: 22px; z-index: 2;
+    position: absolute; right: 56px; top: 22px; z-index: 2;
     font-family: "Mono", ui-monospace, monospace; font-size: 13px; letter-spacing: .1em;
     text-transform: uppercase; color: var(--dim); text-decoration: none;
+    border: 1px solid var(--hairline); border-radius: 999px; padding: 8px 14px; line-height: 1; white-space: nowrap;
   }
-  #hub:hover { color: var(--compute); }
+  #hub:hover { color: var(--compute); border-color: var(--compute); }
   #hub[hidden] { display: none; }
 </style>
 </head>

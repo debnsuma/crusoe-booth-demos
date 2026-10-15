@@ -60,8 +60,6 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text
 .card .open { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px; padding-top: 16px; border-top: 1px solid var(--line); font-family: var(--font-display); font-size: 15px; letter-spacing: .1em; text-transform: uppercase; color: var(--tone); }
 .card .open .arrow { transition: transform .18s ease; }
 .card:hover .open .arrow { transform: translateX(6px); }
-.card .default { position: absolute; top: -13px; right: 22px; }
-.card.default { border-color: var(--accent); }
 .card[data-tone="slate"] { --tone: var(--slate); --tone-ink: #0B1216; }
 .card[data-tone="gold"]  { --tone: var(--gold);  --tone-ink: #FFFFFF; }
 .card[data-tone="green"] { --tone: var(--green); --tone-ink: #FFFFFF; }
@@ -93,7 +91,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text
     <p>Every screen here runs on its own, no network needed once loaded. Open one, and it takes over the display.</p>
     <div class="keys" aria-hidden="true">
       <div><kbd>1</kbd>–<kbd id="key-last">3</kbd> open a demo</div>
-      <div><kbd>↵</kbd> open the default</div>
+      <div><kbd>↵</kbd> open demo 1</div>
       <div><kbd>⌥ ←</kbd> come back here</div>
     </div>
   </div>
@@ -116,8 +114,7 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '
 const hrefOf = d => (d.path || `${d.id}/`);
 
 document.getElementById('cards').innerHTML = DEMOS.map((d, i) => `
-  <a class="card${d.isDefault ? ' default' : ''}" data-tone="${esc(d.tone || 'accent')}" href="${esc(hrefOf(d))}" data-key="${i + 1}">
-    ${d.isDefault ? '<span class="chip default">Default</span>' : ''}
+  <a class="card" data-tone="${esc(d.tone || 'accent')}" href="${esc(hrefOf(d))}" data-key="${i + 1}">
     <div class="who"><span class="num">${i + 1}</span><span class="eyebrow">${esc(d.product)}</span></div>
     <h2>${esc(d.title)}</h2>
     <p>${esc(d.blurb)}</p>

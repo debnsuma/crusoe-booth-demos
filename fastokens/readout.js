@@ -38,7 +38,8 @@ export function drawHeader(ctx, state, meta) {
   if (meta?.n_groups) {
     right.push(`${(state.pass % meta.n_groups) + 1} of ${meta.n_groups}`);
   }
-  label(ctx, right.join("   ·   "), r.w - 56, r.h / 2 + 5,
+  // 150px clear of the "All Demos" pill at the right end of the bar.
+  label(ctx, right.join("   ·   "), r.w - 56 - 150, r.h / 2 + 5,
         { size: 13, color: C.dim, align: "right", mono: true, track: 0 });
 }
 

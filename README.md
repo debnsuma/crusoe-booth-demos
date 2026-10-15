@@ -34,7 +34,7 @@ git push origin main
 
 1. Put the demo in its own folder with an `index.html` inside. It must be static: HTML, JS, CSS, data files, fonts. No server, no build step at runtime. Asset paths should be relative (`./fonts/x.woff2`, not `/fonts/x.woff2`) so the folder works under any path.
 2. Add one entry to `demos.js`: id (the folder name), product, title, blurb, tags, tone.
-3. Optional: a small "All demos" link back to `../`, shown only when `location.protocol` is not `file:`.
+3. A small "All Demos" pill in its top bar linking to `../`, shown only when `location.protocol` is not `file:`. Copy the one in `managed-rl-wordle/index.html` (the `.top .hub` rule) so it matches.
 
 That is the whole process. The launcher reads the registry at load time and lays out the cards itself.
 
@@ -42,7 +42,7 @@ That is the whole process. The launcher reads the registry at load time and lays
 
 Each demo keeps its own look inside; they share the top bar, the type, and the palette: near-black ground, charcoal panels, white lockup, Hi-Vis Yellow (`#CEEB13`) as the one accent, Diatype Mono for display, Suisse Intl for text.
 
-**managed-rl-wordle** is a verbatim copy of [debnsuma/managed-rl-wordle-demo](https://github.com/debnsuma/managed-rl-wordle-demo). Nothing changed. Its `run.sh` and `live_server.py` still work from inside the folder. It is the default demo: listed first, marked Default, opened by Enter.
+**managed-rl-wordle** is a copy of [debnsuma/managed-rl-wordle-demo](https://github.com/debnsuma/managed-rl-wordle-demo) with one addition: the "All Demos" pill in the top bar. Nothing else changed; `run.sh` and `live_server.py` still work from inside the folder. It is the default demo: listed first and opened by Enter.
 
 **fastokens** is a static build of the `fastokens-conf-demo` booth repo. Upstream, a FastAPI server walked `combined.csv` and pushed snapshots over a WebSocket. Here `engine.js` is a line-for-line port of `server/duel.py` and `server/ablation.py` into the browser: same parse, same grouping, same per-pass axis, same 1 s step and 3 s hold, same snapshot shape, so `chart.js` and `readout.js` are untouched. `combined.csv` is still the only source of numbers; replace it and reload. The page swapped Inter and JetBrains Mono for the brand fonts, moved to the shared palette, and gained the shared top bar. The Rust crate, the measurement tools and the Python server stay upstream.
 
@@ -52,4 +52,4 @@ Each demo keeps its own look inside; they share the top bar, the type, and the p
 
 In `demos.js`, `HUB_CONFIG.idleOpenDefaultSeconds` opens the default demo on its own after that many seconds without a touch. It is off (`0`) by default. Also `?demo=<id>` on the launcher URL opens a demo directly, for a bookmark or a QR code.
 
-Coming back from a demo: the fastokens and Slurm screens have an "All demos" link; everywhere, Alt+Left (Cmd+[ on macOS) returns to the launcher.
+Coming back from a demo: every screen has an "All Demos" pill at the right end of its top bar. Alt+Left (Cmd+[ on macOS) works too.
